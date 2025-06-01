@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - main
+
+pool:
+  name: MYLOCALPOOL
+
+steps:
+  # Step 1: Build the project with Maven
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'clean package'
+    displayName: 'Build with Maven'
+
+  # Step 2: Simulate Deployment
+  - script: |
+      echo "Simulating deployment..."
+      mkdir deployed
+      copy target\*.jar deployed\
+      echo "Deployment successful!"
+    displayName: 'Simulate Deployment'
+
+  # Step 3: Run the Application
+  - script: |
+      echo "Running the JAR file..."
+      java -jar deployed\*.jar
+    displayName: 'Run Application'
+
